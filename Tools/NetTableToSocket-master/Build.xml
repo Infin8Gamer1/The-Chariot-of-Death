@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!-- Configuration of the Ant build system to generate a Jar file --> 
+<project name="TestMain" default="CreateJar">
+	<target name="CreateJar" description="Generates distributable">
+		<mkdir dir="dist" />
+	
+	    <!-- This is the executable jar -->
+	    <jar jarfile="dist/NetTableToSocket.jar" basedir="bin/" includes="**/*.class">
+	        <manifest>
+	            <attribute name="Main-Class" value="HoloFirst.NetTableToSocket"/>
+	            <!-- attribute name="Class-Path" value="C:/my/path/to/wpi/tools/SmartDashboard.jar"/ --> 
+	        </manifest>
+	    </jar>
+		
+		<copy file="lib/WPINetTable.jar" todir="dist"/>
+		<copy file="message_config.xml" todir="dist"/>
+	</target>
+	<target name="CleanJar" description="Removes distributable">
+		<deltree dir="dist"/>
+	</target>
+</project>

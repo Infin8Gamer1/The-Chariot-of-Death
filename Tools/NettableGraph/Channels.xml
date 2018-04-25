@@ -1,0 +1,32 @@
+<Channels>
+  <Channel>
+    <Key>/FRCRobot/turnAdj</Key>
+    <Color>Red</Color>
+    <Mult>20</Mult>
+    <Offset>-20</Offset>
+  </Channel>
+  <Channel>
+    <Key>/FRCRobot/gyroRate</Key>
+    <Color>Purple</Color>
+    <Mult>1</Mult>
+    <Offset>0</Offset>
+  </Channel>
+  <Channel>
+    <Key>/FRCRobot/angleError</Key>
+    <Color>Green</Color>
+    <Mult>1</Mult>
+    <Offset>20</Offset>
+  </Channel>
+  <Channel>
+    <Key>/FRCRobot/lMotor</Key>
+    <Color>Blue</Color>
+    <Mult>1</Mult>
+    <Offset>40</Offset>
+  </Channel>
+  <Channel>
+    <Key>/FRCRobot/rMotor</Key>
+    <Color>Orange</Color>
+    <Mult>1</Mult>
+    <Offset>-40</Offset>
+  </Channel>
+</Channels>
