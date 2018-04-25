@@ -59,10 +59,19 @@ public class OI {
 
     
     public Joystick driveJoystick;
+    
+    public JoystickButton SpeedShiftUp;
+    public JoystickButton SpeedShiftDown;
 
     public OI() {
       
       driveJoystick = new Joystick(0);
+      
+      SpeedShiftUp = new JoystickButton(driveJoystick, Constants.kShiftUpButton);
+      SpeedShiftUp.whenReleased(new SpeedShiftUp());
+      
+      SpeedShiftDown = new JoystickButton(driveJoystick, Constants.kShiftDownButton);
+      SpeedShiftDown.whenReleased(new SpeedShiftDown());
       
 
     }

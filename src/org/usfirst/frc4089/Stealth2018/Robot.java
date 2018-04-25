@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
     public static Drive drive;
     public static Sensors sensors;
     
-    public SpeedPresets speedSetting;
-    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -57,8 +55,6 @@ public class Robot extends TimedRobot {
         
         drive = new Drive();
         sensors = new Sensors();
-        
-        speedSetting = SpeedPresets.Medium;
         
         logging.SetMode(Modes.Init);
         logging.LogEvent("Robot Code Init");

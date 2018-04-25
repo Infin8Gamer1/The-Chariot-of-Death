@@ -64,6 +64,13 @@ public class Drive extends Subsystem {
       DRIVE_TOWARDS_GOAL_APPROACH // drive forwards until we are at optimal shooting distance
   }
   
+  public static enum SpeedPreset {
+	  Slow,
+	  Medium,
+	  Fast,
+	  FullSpeed
+  }
+  
   //----------------------------------------------------------------------------
   //  Class Attributes 
   //----------------------------------------------------------------------------
@@ -73,6 +80,11 @@ public class Drive extends Subsystem {
   double mActualSpeed = 0.0;
   StopWatch mDisplay = new StopWatch(500);
   DriveControlState mState = DriveControlState.OPEN_LOOP;
+  public SpeedPreset mSpeedPreset = SpeedPreset.Slow;
+  
+  public void SetSpeedPreset(SpeedPreset input) {
+	  mSpeedPreset = input;
+  }
   
   
   public void SetAuto()
@@ -170,18 +182,20 @@ public class Drive extends Subsystem {
       //turn modifier on joystick
       x *= driveJoystick.getRawAxis(3);
       
-      
-      /*// Adjust speed biased on speed buttons
-      if (driveJoystick.getRawButton(Constants.kFastButton)) {
+      //adjust speed based on selected setting
+      if (mSpeedPreset == SpeedPreset.Slow) {
+    	  y *= Constants.kSlowSpeed;
+    	  x *= Constants.kSlowTurnSpeed;
+      } else if (mSpeedPreset == SpeedPreset.Medium) {
+    	  y *= Constants.kNormalSpeed;
+    	  x *= Constants.kNormalTurnSpeed;
+      } else if (mSpeedPreset == SpeedPreset.Fast) {
     	  y *= Constants.kFastSpeed;
-      	  x *= Constants.kFastTurnSpeed;
-      } else if (driveJoystick.getRawButton(Constants.kSlowButton)) {
-          y *= Constants.kSlowSpeed;
-          x *= Constants.kSlowTurnSpeed;
-      } else {
-          y *= Constants.kNormalSpeed;
-          x *= Constants.kNormalTurnSpeed;
-      }*/
+    	  x *= Constants.kFastTurnSpeed;
+      } else if (mSpeedPreset == SpeedPreset.FullSpeed) {
+    	  y *= 1;
+    	  x *= 1;
+      }
       
       if(DriveControlState.OPEN_LOOP == mState)
       {

@@ -20,10 +20,10 @@ public class Constants {
 	public static final int CANPDP = 18;
 
 	// User Interface consts
-	public static final int kFastButton = 1;
-	public static final int kSlowButton = 2;
+	public static final int kShiftUpButton = 6;
+	public static final int kShiftDownButton = 5;
 	
-	public static final int kDisplaySensors = 5;
+	public static final int kDisplaySensors = 3;
 	
 	//Dead Bands
 	public static final double kDriveSpeedDeadBand = 0.05;
