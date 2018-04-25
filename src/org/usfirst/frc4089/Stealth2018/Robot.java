@@ -79,6 +79,17 @@ public class Robot extends TimedRobot {
         System.out.println("robot init");
         
     }
+    
+    private void displayDashboard() {
+    	//put speed on dashboard
+    	double speed = -1.00;
+    	speed = drive.GetSpeed();
+    	SmartDashboard.putNumber("Speed", speed);
+    	//put front ultrasonic on dashboard
+    	SmartDashboard.putNumber("FrontUltrasonic", sensors.GetFrontUltrasonic());
+    	//put Speed Mode on dashboard
+    	SmartDashboard.putString("SpeedMode", drive.mSpeedPreset.toString());
+    }
 
 
     @Override
@@ -136,15 +147,6 @@ public class Robot extends TimedRobot {
         displayDashboard();
         
         Robot.drive.DriveRobot(oi.driveJoystick);
-    }
-    
-    private void displayDashboard() {
-    	//put speed on dashboard
-    	double speed = -1.00;
-    	speed = drive.GetSpeed();
-    	SmartDashboard.putNumber("Speed", speed);
-    	//put front ultrasonic on dashboard
-    	SmartDashboard.putNumber("FrontUltrasonic", sensors.GetFrontUltrasonic());
     }
     
     
