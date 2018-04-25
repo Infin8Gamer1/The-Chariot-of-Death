@@ -23,6 +23,7 @@ public class Constants {
 	public static final int kShiftUpButton = 6;
 	public static final int kShiftDownButton = 5;
 	public static final int kDisplaySensorsButton = 3;
+	public static final int kEmergencyStopButton = 4;
 	
 	//Dead Bands
 	public static final double kDriveSpeedDeadBand = 0.05;
