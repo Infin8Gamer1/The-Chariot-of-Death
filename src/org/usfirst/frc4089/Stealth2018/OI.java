@@ -62,6 +62,8 @@ public class OI {
     
     public JoystickButton SpeedShiftUp;
     public JoystickButton SpeedShiftDown;
+    
+    public JoystickButton DisplaySensors;
 
     public OI() {
       
@@ -73,6 +75,8 @@ public class OI {
       SpeedShiftDown = new JoystickButton(driveJoystick, Constants.kShiftDownButton);
       SpeedShiftDown.whenReleased(new SpeedShiftDown());
       
+      DisplaySensors = new JoystickButton(driveJoystick, Constants.kDisplaySensorsButton);
+      DisplaySensors.whileHeld(new DisplaySensors());
 
     }
 }

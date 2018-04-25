@@ -92,27 +92,12 @@ public class Robot extends TimedRobot {
       
     }
 
-    private void DisplaySensors()
-    {
-    	PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-    	RobotMap.pigeonIMU.getFusedHeading(fusionStatus);
-      System.out.format("HEADING: %f\n",
-      	  fusionStatus.heading
-          );
-
-    }
+    
     
     @Override
     public void disabledPeriodic() {
     	//logging.Log();
         Scheduler.getInstance().run();
-        //shouldn't need to reset gyro every disabled loop so i commented it out
-        //RobotMap.pigeonIMU.setFusedHeading(0, 30);
-        
-        if(Robot.oi.driveJoystick.getRawButton(Constants.kDisplaySensors))
-        {
-        	DisplaySensors();
-        }
     }
 
     
@@ -147,11 +132,6 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
     	logging.Log();
         Scheduler.getInstance().run();
-        
-        if(Robot.oi.driveJoystick.getRawButton(Constants.kDisplaySensors))
-        {
-        	DisplaySensors();
-        }
         
         displayDashboard();
         
