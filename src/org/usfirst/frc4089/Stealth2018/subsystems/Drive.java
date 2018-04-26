@@ -90,24 +90,6 @@ public class Drive extends Subsystem {
     public void initDefaultCommand() {
     	setDefaultCommand(new UserDrive());
     }
-
-    @Override
-    public void periodic() {
-      // Do Nothing
-    }
-
-    public void SetTargetAngle(double targetAngle)
-    {
-      mTargetAngle = targetAngle;
-    }
-    
-    
-    public void ClearCurrentAngle()
-    {
-      mCurrentAngle = 0.0;
-      RobotMap.pigeonIMU.setFusedHeading(0, 30);
-    }
-
     
     public void DriveRobot(Joystick driveJoystick) {
     	if(mControlState == DriveControlState.FlightStick)
@@ -168,8 +150,7 @@ public class Drive extends Subsystem {
 		      
 		    RawTankDriveRobot(SpeedL, SpeedR);
 	    }
-    }
-    
+    }    
     
     public void DriveRobotWithOutGyro(double speed, double turn) {
     	
