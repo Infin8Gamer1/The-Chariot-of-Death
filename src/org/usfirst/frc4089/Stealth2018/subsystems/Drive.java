@@ -55,13 +55,8 @@ public class Drive extends Subsystem {
   //----------------------------------------------------------------------------
   // The robot drivetrain's various states.
   public enum DriveControlState {
-      OPEN_LOOP, // open loop voltage control
-      VELOCITY_SETPOINT, // velocity PID control
-      PATH_FOLLOWING, // used for autonomous driving
-      AIM_TO_GOAL, // turn to face the boiler
-      TURN_TO_HEADING, // turn in place
-      DRIVE_TOWARDS_GOAL_COARSE_ALIGN, // turn to face the boiler, then DRIVE_TOWARDS_GOAL_COARSE_ALIGN
-      DRIVE_TOWARDS_GOAL_APPROACH // drive forwards until we are at optimal shooting distance
+      FlightStick,
+      XboxControler
   }
   
   public static enum SpeedPreset {
@@ -78,24 +73,18 @@ public class Drive extends Subsystem {
   boolean mSendJoystickCommands = true;   // send the joystick to the drive, we surpress this in auto
   double mCurrentAngle = 0.0;
   double mActualSpeed = 0.0;
+  double mActualSpeedL = 0.0;
+  double mActualSpeedR = 0.0;
   StopWatch mDisplay = new StopWatch(500);
-  DriveControlState mState = DriveControlState.OPEN_LOOP;
+  public DriveControlState mControlState = DriveControlState.FlightStick;
   public SpeedPreset mSpeedPreset = SpeedPreset.Slow;
   
   public void SetSpeedPreset(SpeedPreset input) {
 	  mSpeedPreset = input;
   }
   
-  
-  public void SetAuto()
-  {
-    mState = DriveControlState.PATH_FOLLOWING;
-  }
-  
-  
-  public void SetTele()
-  {
-    mState = DriveControlState.OPEN_LOOP;
+  public void SetDriveControlState(DriveControlState input) {
+	  mControlState = input;
   }
    
     public void initDefaultCommand() {
@@ -118,97 +107,67 @@ public class Drive extends Subsystem {
       mCurrentAngle = 0.0;
       RobotMap.pigeonIMU.setFusedHeading(0, 30);
     }
-    
-    
-    public void AutoDrive(double speedInPerTenthSec, double speedL, double speedR, double heading, FileWriter logFile) {
-	    PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-	    double [] xyz_dps = new double [3];
-	    RobotMap.pigeonIMU.getRawGyro(xyz_dps);
-	    RobotMap.pigeonIMU.getFusedHeading(fusionStatus);
-	    
-	    
-	    
-	    mCurrentAngle = fusionStatus.heading;
-	  
-	    if(heading>180)
-	    {
-	      heading -= 360.0;
-	    }
-	    
-	    double targetSpeedL = speedL*-25.5;
-	    double targetSpeedR = speedR*-25.5;
-	   
-	    double angle_difference = heading - mCurrentAngle;    // Make sure to bound this from -180 to 180, otherwise you will get super large values
-	  
-	    double turn = 3.0*angle_difference;
-	  
-	      targetSpeedL += turn;
-	      targetSpeedR -= turn;
-	    
-	    RobotMap.driveSRXDriveLF.set(ControlMode.Velocity, targetSpeedR);
-	    RobotMap.driveSRXDriveRF.set(ControlMode.Velocity, targetSpeedL);
-	  
-	    try {
-	      logFile.write(
-	          Timer.getFPGATimestamp() + ", " +
-	          speedL + ", " +
-	          speedR + ", " +
-	          heading + ", " +
-	          turn + ", " +
-	          targetSpeedL + ", " +
-	          targetSpeedR + ", " +
-	          RobotMap.driveSRXDriveLF.getSelectedSensorVelocity(0) + ", " +
-	          RobotMap.driveSRXDriveRF.getSelectedSensorVelocity(0) + ", " +
-	          RobotMap.driveSRXDriveLF.getMotorOutputVoltage() + ", " +
-	          RobotMap.driveSRXDriveRF.getMotorOutputVoltage() +", " +
-	          angle_difference + "\n"
-	      );
-	    }
-	    catch(IOException e) {
-	        e.printStackTrace();
-	    }
-    }
 
     
-    
     public void DriveRobot(Joystick driveJoystick) {
-      
-      double speed = driveJoystick.getRawAxis(1);
-      double turn = driveJoystick.getRawAxis(2);
-      
-      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBand);
-      turn = DriveMath.DeadBand(turn,Constants.kDriveTurnDeadBand);
-      
-      //turn modifier on joystick
-      //x *= driveJoystick.getRawAxis(3);
-      
-      //adjust speed based on selected setting
-      if (mSpeedPreset == SpeedPreset.Slow) {
-    	  speed *= Constants.kSlowSpeed;
-    	  turn *= Constants.kSlowTurnSpeed;
-      } else if (mSpeedPreset == SpeedPreset.Medium) {
-    	  speed *= Constants.kNormalSpeed;
-    	  turn *= Constants.kNormalTurnSpeed;
-      } else if (mSpeedPreset == SpeedPreset.Fast) {
-    	  speed *= Constants.kFastSpeed;
-    	  turn *= Constants.kFastTurnSpeed;
-      } else if (mSpeedPreset == SpeedPreset.FullSpeed) {
-    	  speed *= 1;
-    	  turn *= 1;
-      }
-      
-      if (speed <= 0.15 && speed >= -0.15) {
-    	  turn *= Constants.kStopedTurnModifyer;
-      }
-      
-      if (speed < -0.15) {
-    	  speed *= Constants.kReverseSpeedModifyer;
-      }
-      
-      if(DriveControlState.OPEN_LOOP == mState)
-      {
-        DriveRobot(speed, turn);
-      }
+    	if(mControlState == DriveControlState.FlightStick)
+	    {
+		      double speed = driveJoystick.getRawAxis(1);
+		      double turn = driveJoystick.getRawAxis(2);
+		      
+		      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBand);
+		      turn = DriveMath.DeadBand(turn,Constants.kDriveTurnDeadBand);
+		      
+		      //adjust speed based on selected setting
+		      if (mSpeedPreset == SpeedPreset.Slow) {
+		    	  speed *= Constants.kSlowSpeed;
+		    	  turn *= Constants.kSlowTurnSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.Medium) {
+		    	  speed *= Constants.kNormalSpeed;
+		    	  turn *= Constants.kNormalTurnSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.Fast) {
+		    	  speed *= Constants.kFastSpeed;
+		    	  turn *= Constants.kFastTurnSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.FullSpeed) {
+		    	  speed *= 1;
+		    	  turn *= 1;
+		      }
+		      //stopped turn modifier
+		      if (speed <= 0.15 && speed >= -0.15) {
+		    	  turn *= Constants.kStopedTurnModifier;
+		      }
+		      //reverse speed modifier
+		      if (speed < -0.15) {
+		    	  speed *= Constants.kReverseSpeedModifier;
+		      }
+		      
+		      //send calculated speed and turn values
+		      DriveRobot(speed, turn);
+	    } else if(mControlState == DriveControlState.XboxControler)
+	    {
+    		double SpeedL = driveJoystick.getRawAxis(1);
+    		double SpeedR = driveJoystick.getRawAxis(5);
+    		
+    		DriveMath.DeadBand(SpeedL,Constants.kDriveSpeedDeadBand);
+    		DriveMath.DeadBand(SpeedR,Constants.kDriveSpeedDeadBand);
+    		
+    		//adjust speed based on selected setting
+		      if (mSpeedPreset == SpeedPreset.Slow) {
+		    	  SpeedL *= Constants.kSlowSpeed;
+		    	  SpeedR *= Constants.kSlowSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.Medium) {
+		    	  SpeedL *= Constants.kNormalSpeed;
+		    	  SpeedR *= Constants.kNormalSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.Fast) {
+		    	  SpeedL *= Constants.kFastSpeed;
+		    	  SpeedR *= Constants.kFastSpeed;
+		      } else if (mSpeedPreset == SpeedPreset.FullSpeed) {
+		    	  SpeedL *= 1;
+		    	  SpeedR *= 1;
+		      }
+		      
+		    RawTankDriveRobot(SpeedL, SpeedR);
+	    }
     }
     
     
@@ -220,7 +179,6 @@ public class Drive extends Subsystem {
     	
     	RawDriveRobot(speed*0.5, turn*0.5);
     }
-    
     
     public void DriveRobot(double speed, double turn) {  
     	
@@ -256,14 +214,40 @@ public class Drive extends Subsystem {
         }
       }
     }
+    
+    public void RawTankDriveRobot (double speedL, double speedR) {
+    	// Ramp the speed for l
+        if(mActualSpeedL != speedL)
+        {
+          if(mActualSpeedL<speedL)
+          {
+            mActualSpeedL = Math.min(mActualSpeedL+kSpeedGain, speedL);
+          }
+          else
+          {
+            mActualSpeedL = Math.max(mActualSpeedL-kSpeedGain, speedL);
+          }
+        }
+     // Ramp the speed for r
+        if(mActualSpeedR != speedR)
+        {
+          if(mActualSpeedR<speedR)
+          {
+            mActualSpeedR = Math.min(mActualSpeedR+kSpeedGain, speedR);
+          }
+          else
+          {
+            mActualSpeedR = Math.max(mActualSpeedR-kSpeedGain, speedR);
+          }
+        }
+        
+        double targetSpeedL = (mActualSpeedL) * 4000;
+        double targetSpeedR = (mActualSpeedR) * 4000;
+    	
+    	RobotMap.driveSRXDriveLF.set(ControlMode.Velocity, targetSpeedL);
+    	RobotMap.driveSRXDriveRF.set(ControlMode.Velocity, targetSpeedR);
+    }
 
-    //--------------------------------------------------------------------
-    // Purpose:
-    //     Set the velocity of the robot 
-    //
-    // Notes:
-    //     None
-    //--------------------------------------------------------------------  
     public void RawDriveRobot(double speed, double turn) {
       // Ramp the speed
       if(mActualSpeed != speed)

@@ -24,6 +24,7 @@ public class Constants {
 	public static final int kShiftDownButton = 5;
 	public static final int kDisplaySensorsButton = 3;
 	public static final int kEmergencyStopButton = 4;
+	public static final int kDriveControlerSwapButton = 8;
 	
 	//Dead Bands
 	public static final double kDriveSpeedDeadBand = 0.1;
@@ -37,8 +38,8 @@ public class Constants {
 	public static final double kSlowSpeed = 0.3;
 	public static final double kSlowTurnSpeed = 0.4;
 	
-	public static final double kStopedTurnModifyer = 1.2;
-	public static final double kReverseSpeedModifyer = 0.6;
+	public static final double kStopedTurnModifier = 1.2;
+	public static final double kReverseSpeedModifier = 0.6;
 		
 	// Gyro Constants
 	public static final int kGyroZ = 2;

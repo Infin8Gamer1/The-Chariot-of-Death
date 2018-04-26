@@ -89,6 +89,8 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putNumber("FrontUltrasonic", sensors.GetFrontUltrasonic());
     	//put Speed Mode on dashboard
     	SmartDashboard.putString("SpeedMode", drive.mSpeedPreset.toString());
+    	//put Control Mode on dashboard
+    	SmartDashboard.putString("ControlMode", drive.mControlState.toString());
     }
 
 
@@ -133,7 +135,6 @@ public class Robot extends TimedRobot {
         //Init teleop
         System.out.println("tele init");
         RobotMap.SetUpTalonsForTele();
-        Robot.drive.SetTele();
     }
 
     /**
