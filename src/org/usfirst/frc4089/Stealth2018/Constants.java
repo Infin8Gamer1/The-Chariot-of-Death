@@ -38,7 +38,7 @@ public class Constants {
 	public static final double kSlowTurnSpeed = 0.4;
 	
 	public static final double kStopedTurnModifyer = 1.2;
-	//public static final double k
+	public static final double kReverseSpeedModifyer = 0.6;
 		
 	// Gyro Constants
 	public static final int kGyroZ = 2;

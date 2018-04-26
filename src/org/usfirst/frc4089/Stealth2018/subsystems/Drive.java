@@ -201,6 +201,10 @@ public class Drive extends Subsystem {
     	  turn *= Constants.kStopedTurnModifyer;
       }
       
+      if (speed < -0.15) {
+    	  speed *= Constants.kReverseSpeedModifyer;
+      }
+      
       if(DriveControlState.OPEN_LOOP == mState)
       {
         DriveRobot(speed, turn);
