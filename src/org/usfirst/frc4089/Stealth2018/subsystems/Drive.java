@@ -173,40 +173,44 @@ public class Drive extends Subsystem {
     
     public void DriveRobot(Joystick driveJoystick) {
       
-      double y = driveJoystick.getRawAxis(1);
-      double x = driveJoystick.getRawAxis(2);
+      double speed = driveJoystick.getRawAxis(1);
+      double turn = driveJoystick.getRawAxis(2);
       
-      y = DriveMath.DeadBand(y,0.05);
-      x = DriveMath.DeadBand(x,0.05);
+      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBand);
+      turn = DriveMath.DeadBand(turn,Constants.kDriveTurnDeadBand);
       
       //turn modifier on joystick
-      x *= driveJoystick.getRawAxis(3);
+      //x *= driveJoystick.getRawAxis(3);
       
       //adjust speed based on selected setting
       if (mSpeedPreset == SpeedPreset.Slow) {
-    	  y *= Constants.kSlowSpeed;
-    	  x *= Constants.kSlowTurnSpeed;
+    	  speed *= Constants.kSlowSpeed;
+    	  turn *= Constants.kSlowTurnSpeed;
       } else if (mSpeedPreset == SpeedPreset.Medium) {
-    	  y *= Constants.kNormalSpeed;
-    	  x *= Constants.kNormalTurnSpeed;
+    	  speed *= Constants.kNormalSpeed;
+    	  turn *= Constants.kNormalTurnSpeed;
       } else if (mSpeedPreset == SpeedPreset.Fast) {
-    	  y *= Constants.kFastSpeed;
-    	  x *= Constants.kFastTurnSpeed;
+    	  speed *= Constants.kFastSpeed;
+    	  turn *= Constants.kFastTurnSpeed;
       } else if (mSpeedPreset == SpeedPreset.FullSpeed) {
-    	  y *= 1;
-    	  x *= 1;
+    	  speed *= 1;
+    	  turn *= 1;
+      }
+      
+      if (speed <= 0.15 && speed >= -0.15) {
+    	  turn *= Constants.kStopedTurnModifyer;
       }
       
       if(DriveControlState.OPEN_LOOP == mState)
       {
-        DriveRobot(y, x);
+        DriveRobot(speed, turn);
       }
     }
     
     
     public void DriveRobotWithOutGyro(double speed, double turn) {
     	
-    	if (Robot.sensors.GetFrontUltrasonic() < Constants.FrontUltrasonicSafetyStopInches && speed > 0.05 && Constants.StopSafteyEnabled) {
+    	if (Robot.sensors.GetFrontUltrasonic() < Constants.FrontUltrasonicSafetyStopInches && speed < 0.05 && Constants.StopSafteyEnabled) {
       	  speed = 0;
         }
     	
@@ -216,7 +220,7 @@ public class Drive extends Subsystem {
     
     public void DriveRobot(double speed, double turn) {  
     	
-      if (Robot.sensors.GetFrontUltrasonic() < Constants.FrontUltrasonicSafetyStopInches && speed > 0.05 && Constants.StopSafteyEnabled) {
+      if (Robot.sensors.GetFrontUltrasonic() < Constants.FrontUltrasonicSafetyStopInches && speed < 0.05 && Constants.StopSafteyEnabled) {
     	  speed = 0;
       }
       

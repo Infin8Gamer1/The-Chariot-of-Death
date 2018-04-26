@@ -10,7 +10,7 @@ public class Constants {
 	//ultrasonic sensor
 	public static final int FrontUltrasonicPingChanel = 1;
 	public static final int FrontUltrasonicEchoChanel = 2;
-	public static final double FrontUltrasonicSafetyStopInches = 5.00;
+	public static final double FrontUltrasonicSafetyStopInches = 6.00;
 	
 	// CAN Assignments
 	public static final int CANTalonSRXDriveLR = 3;
@@ -26,7 +26,7 @@ public class Constants {
 	public static final int kEmergencyStopButton = 4;
 	
 	//Dead Bands
-	public static final double kDriveSpeedDeadBand = 0.05;
+	public static final double kDriveSpeedDeadBand = 0.1;
 	public static final double kDriveTurnDeadBand = 0.05;
 	
 	// Drivers Speed
@@ -36,6 +36,9 @@ public class Constants {
 	public static final double kNormalTurnSpeed = 0.4;
 	public static final double kSlowSpeed = 0.3;
 	public static final double kSlowTurnSpeed = 0.4;
+	
+	public static final double kStopedTurnModifyer = 1.2;
+	//public static final double k
 		
 	// Gyro Constants
 	public static final int kGyroZ = 2;
