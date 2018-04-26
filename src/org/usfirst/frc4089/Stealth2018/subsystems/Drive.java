@@ -31,6 +31,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.GenericHID.HIDType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -50,15 +51,6 @@ public class Drive extends Subsystem {
   static final double kMaxCorrectionRatio = 0.20; /* cap corrective turning throttle to 30 percent of forward throttle */
   static final double kSpeedGain = 0.05; // The ramp for the speed
   
-  //----------------------------------------------------------------------------
-  //  ENUM Constants 
-  //----------------------------------------------------------------------------
-  // The robot drivetrain's various states.
-  public enum DriveControlState {
-      FlightStick,
-      XboxControler
-  }
-  
   public static enum SpeedPreset {
 	  Slow,
 	  Medium,
@@ -76,15 +68,10 @@ public class Drive extends Subsystem {
   double mActualSpeedL = 0.0;
   double mActualSpeedR = 0.0;
   StopWatch mDisplay = new StopWatch(500);
-  public DriveControlState mControlState = DriveControlState.FlightStick;
   public SpeedPreset mSpeedPreset = SpeedPreset.Slow;
   
   public void SetSpeedPreset(SpeedPreset input) {
 	  mSpeedPreset = input;
-  }
-  
-  public void SetDriveControlState(DriveControlState input) {
-	  mControlState = input;
   }
    
     public void initDefaultCommand() {
@@ -92,7 +79,8 @@ public class Drive extends Subsystem {
     }
     
     public void DriveRobot(Joystick driveJoystick) {
-    	if(mControlState == DriveControlState.FlightStick)
+    	
+    	if(driveJoystick.getType() == HIDType.kHIDJoystick)
 	    {
 		      double speed = driveJoystick.getRawAxis(1);
 		      double turn = driveJoystick.getRawAxis(2);
@@ -125,7 +113,7 @@ public class Drive extends Subsystem {
 		      
 		      //send calculated speed and turn values
 		      DriveRobot(speed, turn);
-	    } else if(mControlState == DriveControlState.XboxControler)
+	    } else if(driveJoystick.getType() == HIDType.kHIDGamepad)
 	    {
     		double SpeedL = driveJoystick.getRawAxis(1);
     		double SpeedR = driveJoystick.getRawAxis(5);

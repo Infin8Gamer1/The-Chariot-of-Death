@@ -65,7 +65,6 @@ public class OI {
     
     public JoystickButton DisplaySensors;
     
-    public JoystickButton ControlerTypeSwap;
 
     public OI() {
       
@@ -79,9 +78,6 @@ public class OI {
       
       DisplaySensors = new JoystickButton(driveJoystick, Constants.kDisplaySensorsButton);
       DisplaySensors.whileHeld(new DisplaySensors());
-      
-      ControlerTypeSwap = new JoystickButton(driveJoystick, Constants.kDriveControlerSwapButton);
-      ControlerTypeSwap.whenReleased(new DriveControlerSwap());
     }
 }
 

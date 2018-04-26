@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
     	//put Speed Mode on dashboard
     	SmartDashboard.putString("SpeedMode", drive.mSpeedPreset.toString());
     	//put Control Mode on dashboard
-    	SmartDashboard.putString("ControlMode", drive.mControlState.toString());
+    	SmartDashboard.putString("ControlMode", oi.driveJoystick.getType().toString());
     }
 
 
