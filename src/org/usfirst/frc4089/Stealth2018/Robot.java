@@ -107,10 +107,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit(){
     	logging.SetMode(Modes.Disabled);
-      
     }
-
-    
     
     @Override
     public void disabledPeriodic() {
@@ -130,7 +127,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-       Scheduler.getInstance().run();
+    	logging.Log();
+        Scheduler.getInstance().run();
     }
 
     @Override
