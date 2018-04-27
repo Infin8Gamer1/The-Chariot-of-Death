@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
     public static Drive drive;
     public static Sensors sensors;
     
+    public static boolean EmergencyStop;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -58,6 +60,8 @@ public class Robot extends TimedRobot {
         
         logging.SetMode(Modes.Init);
         logging.LogEvent("Robot Code Init");
+        
+        EmergencyStop = false;
         
         RobotMap.pigeonIMU.setFusedHeading(0, 30);
         
@@ -91,6 +95,8 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putString("SpeedMode", drive.mSpeedPreset.toString());
     	//put Control Mode on dashboard
     	SmartDashboard.putString("ControlMode", oi.driveJoystick.getType().toString());
+    	//put Emergency Stop on dashboard
+    	SmartDashboard.putBoolean("EmergencyStop", EmergencyStop);
     }
 
 
@@ -100,7 +106,6 @@ public class Robot extends TimedRobot {
     
     @Override
     public void disabledInit(){
-    	
     	logging.SetMode(Modes.Disabled);
       
     }

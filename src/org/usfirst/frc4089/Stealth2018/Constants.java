@@ -5,7 +5,7 @@ package org.usfirst.frc4089.Stealth2018;
 public class Constants {
     //features
 	public static final boolean UseCamera = false;
-	public static final boolean StopSafteyEnabled = true;
+	public static final boolean StopSafteyEnabled = false;
 	
 	//ultrasonic sensor
 	public static final int FrontUltrasonicPingChanel = 1;
@@ -20,23 +20,30 @@ public class Constants {
 	public static final int CANPDP = 18;
 
 	// User Interface consts
-	public static final int kShiftUpButton = 6;
-	public static final int kShiftDownButton = 5;
-	public static final int kDisplaySensorsButton = 3;
-	public static final int kEmergencyStopButton = 4;
-	public static final int kDriveControlerSwapButton = 8;
+	public static final int kShiftUpButtonJoystick = 6;
+	public static final int kShiftDownButtonJoystick = 5;
+	public static final int kDisplaySensorsButtonJoystick = 3;
+	public static final int kEmergencyStopButtonJoystick = 4;
+	
+	public static final int kShiftUpButtonGamepad = 6;
+	public static final int kShiftDownButtonGamepad = 5;
+	public static final int kDisplaySensorsButtonGamepad = 9;
+	public static final int kEmergencyStopButtonGamepad = 8;
+	
 	
 	//Dead Bands
-	public static final double kDriveSpeedDeadBand = 0.1;
-	public static final double kDriveTurnDeadBand = 0.05;
+	public static final double kDriveSpeedDeadBandJoystick = 0.1;
+	public static final double kDriveTurnDeadBandJoystick = 0.1;
+	
+	public static final double kDriveSpeedDeadBandGamepad = 0.15;
 	
 	// Drivers Speed
-	public static final double kFastSpeed = 0.6;
-	public static final double kFastTurnSpeed = 0.4;
-	public static final double kNormalSpeed = 0.4;
-	public static final double kNormalTurnSpeed = 0.4;
+	public static final double kFastSpeed = 0.7;
+	public static final double kFastTurnSpeed = 0.35;
+	public static final double kNormalSpeed = 0.5;
+	public static final double kNormalTurnSpeed = 0.35;
 	public static final double kSlowSpeed = 0.3;
-	public static final double kSlowTurnSpeed = 0.4;
+	public static final double kSlowTurnSpeed = 0.35;
 	
 	public static final double kStopedTurnModifier = 1.2;
 	public static final double kReverseSpeedModifier = 0.6;

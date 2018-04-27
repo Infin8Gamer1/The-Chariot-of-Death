@@ -43,9 +43,6 @@ import org.usfirst.frc4089.Stealth2018.utilities.*;
 
 
 public class Drive extends Subsystem {
-  //----------------------------------------------------------------------------
-  //  Class Constants 
-  //----------------------------------------------------------------------------
   static final double kPgain = 0.003; /* percent throttle per degree of error */
   static final double kDgain = 0.0002; /* percent throttle per angular velocity dps */
   static final double kMaxCorrectionRatio = 0.20; /* cap corrective turning throttle to 30 percent of forward throttle */
@@ -58,9 +55,6 @@ public class Drive extends Subsystem {
 	  FullSpeed
   }
   
-  //----------------------------------------------------------------------------
-  //  Class Attributes 
-  //----------------------------------------------------------------------------
   double mTargetAngle = 0;
   boolean mSendJoystickCommands = true;   // send the joystick to the drive, we surpress this in auto
   double mCurrentAngle = 0.0;
@@ -80,13 +74,13 @@ public class Drive extends Subsystem {
     
     public void DriveRobot(Joystick driveJoystick) {
     	
-    	if(driveJoystick.getType() == HIDType.kHIDJoystick)
+    	if(driveJoystick.getType() == HIDType.kHIDJoystick && Robot.EmergencyStop == false)
 	    {
 		      double speed = driveJoystick.getRawAxis(1);
 		      double turn = driveJoystick.getRawAxis(2);
 		      
-		      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBand);
-		      turn = DriveMath.DeadBand(turn,Constants.kDriveTurnDeadBand);
+		      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBandJoystick);
+		      turn = DriveMath.DeadBand(turn,Constants.kDriveTurnDeadBandJoystick);
 		      
 		      //adjust speed based on selected setting
 		      if (mSpeedPreset == SpeedPreset.Slow) {
@@ -113,13 +107,14 @@ public class Drive extends Subsystem {
 		      
 		      //send calculated speed and turn values
 		      DriveRobot(speed, turn);
-	    } else if(driveJoystick.getType() == HIDType.kHIDGamepad)
+		      
+	    } else if(driveJoystick.getType() == HIDType.kHIDGamepad && Robot.EmergencyStop == false)
 	    {
     		double SpeedL = driveJoystick.getRawAxis(1);
     		double SpeedR = driveJoystick.getRawAxis(5);
     		
-    		DriveMath.DeadBand(SpeedL,Constants.kDriveSpeedDeadBand);
-    		DriveMath.DeadBand(SpeedR,Constants.kDriveSpeedDeadBand);
+    		DriveMath.DeadBand(SpeedL,Constants.kDriveSpeedDeadBandGamepad);
+    		DriveMath.DeadBand(SpeedR,Constants.kDriveSpeedDeadBandGamepad);
     		
     		//adjust speed based on selected setting
 		      if (mSpeedPreset == SpeedPreset.Slow) {
