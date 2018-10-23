@@ -65,8 +65,8 @@ public class OI {
       
       driveJoystick = new Joystick(0);
       
-      if (driveJoystick.getType() == HIDType.kHIDJoystick) {
-    	  SpeedShiftUp = new JoystickButton(driveJoystick, Constants.kShiftUpButtonJoystick);
+      //if (driveJoystick.getName() == "Logitech Extreme 3D") {
+    	  /*SpeedShiftUp = new JoystickButton(driveJoystick, Constants.kShiftUpButtonJoystick);
           SpeedShiftUp.whenReleased(new SpeedShiftUp());
           
           SpeedShiftDown = new JoystickButton(driveJoystick, Constants.kShiftDownButtonJoystick);
@@ -76,9 +76,9 @@ public class OI {
           DisplaySensors.whileHeld(new DisplaySensors());
           
           EmergencyStop = new JoystickButton(driveJoystick, Constants.kEmergencyStopButtonJoystick);
-          EmergencyStop.whenReleased(new EmergencyStop());
+          EmergencyStop.whenReleased(new EmergencyStop());*/
           
-      } else if (driveJoystick.getType() == HIDType.kHIDGamepad) {
+      /*} else if (driveJoystick.getName() == "Bluetooth XINPUT compatible input device") {*/
     	  SpeedShiftUp = new JoystickButton(driveJoystick, Constants.kShiftUpButtonGamepad);
           SpeedShiftUp.whenReleased(new SpeedShiftUp());
           
@@ -90,7 +90,7 @@ public class OI {
           
           EmergencyStop = new JoystickButton(driveJoystick, Constants.kEmergencyStopButtonGamepad);
           EmergencyStop.whenReleased(new EmergencyStop());
-      }
+      //}*/
       
       
     }

@@ -74,9 +74,8 @@ public class Drive extends Subsystem {
     
     public void DriveRobot(Joystick driveJoystick) {
     	
-    	if(driveJoystick.getType() == HIDType.kHIDJoystick && Robot.EmergencyStop == false)
-	    {
-		      double speed = driveJoystick.getRawAxis(1);
+    	//if(driveJoystick.getName() == "Logitech Extreme 3D" && Robot.EmergencyStop == false){
+		      /*double speed = driveJoystick.getRawAxis(1);
 		      double turn = driveJoystick.getRawAxis(2);
 		      
 		      speed = DriveMath.DeadBand(speed,Constants.kDriveSpeedDeadBandJoystick);
@@ -106,12 +105,12 @@ public class Drive extends Subsystem {
 		      }
 		      
 		      //send calculated speed and turn values
-		      DriveRobot(speed, turn);
+		      DriveRobot(speed, turn);*/
 		      
-	    } else if(driveJoystick.getType() == HIDType.kHIDGamepad && Robot.EmergencyStop == false)
-	    {
-    		double SpeedL = driveJoystick.getRawAxis(1);
-    		double SpeedR = driveJoystick.getRawAxis(5);
+	    /*} else if(driveJoystick.getName() == "Bluetooth XINPUT compatible input device" && Robot.EmergencyStop == false)
+	    {*/
+    		double SpeedL = driveJoystick.getRawAxis(5);
+    		double SpeedR = driveJoystick.getRawAxis(1);
     		
     		DriveMath.DeadBand(SpeedL,Constants.kDriveSpeedDeadBandGamepad);
     		DriveMath.DeadBand(SpeedR,Constants.kDriveSpeedDeadBandGamepad);
@@ -132,7 +131,7 @@ public class Drive extends Subsystem {
 		      }
 		      
 		    RawTankDriveRobot(SpeedL, SpeedR);
-	    }
+	    //}*/
     }    
     
     public void DriveRobotWithOutGyro(double speed, double turn) {

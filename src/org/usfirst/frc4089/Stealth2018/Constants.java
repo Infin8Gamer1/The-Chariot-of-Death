@@ -35,7 +35,7 @@ public class Constants {
 	public static final double kDriveSpeedDeadBandJoystick = 0.1;
 	public static final double kDriveTurnDeadBandJoystick = 0.1;
 	
-	public static final double kDriveSpeedDeadBandGamepad = 0.15;
+	public static final double kDriveSpeedDeadBandGamepad = 0.2;
 	
 	// Drivers Speed
 	public static final double kFastSpeed = 0.7;
