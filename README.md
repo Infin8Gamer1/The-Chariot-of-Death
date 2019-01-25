@@ -1,6 +1,8 @@
 # Chariot of DEATH!!!
 FIRST FRC Stealth Robotics 2018
 
+![](Images/Chariot-of-death.gif)
+
 this is the code that was used to run the fabled Chariot.
 
 ## Cool Features :
